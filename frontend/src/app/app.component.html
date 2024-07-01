@@ -1,1 +1,7 @@
+<nav>
+  <a routerLink="/home">Home</a>
+  <a routerLink="/add-product">Add Product</a>
+  <a *ngIf="isLoggedIn()" (click)="logout()">Logout</a>
+  <a *ngIf="!isLoggedIn()" routerLink="/login">Login</a>
+</nav>
 <router-outlet></router-outlet>

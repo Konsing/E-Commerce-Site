@@ -1,34 +1,5 @@
-// import { Component } from '@angular/core';
-// import { ProductService } from '../../services/product.service';
-
-// @Component({
-//   selector: 'app-add-product',
-//   templateUrl: './add-product.component.html',
-//   styleUrls: ['./add-product.component.css']
-// })
-// export class AddProductComponent {
-//   name: string = '';
-//   description: string = '';
-//   price: number = 0;
-//   category: string = '';
-//   imageUrl: string = '';
-
-//   constructor(private productService: ProductService) { }
-
-//   async addProduct() {
-//     const product = {
-//       name: this.name,
-//       description: this.description,
-//       price: this.price,
-//       category: this.category,
-//       imageUrl: this.imageUrl
-//     };
-//     const result = await this.productService.createProduct(product);
-//     console.log(result);
-//   }
-// }
-
 import { Component } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-add-product',
@@ -36,12 +7,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent {
+  name: string = '';
+  description: string = '';
+  price: number = 0;
+  category: string = '';
+  imageUrl: string = '';
+  message: string = '';
 
-  constructor() { }
+  constructor(private productService: ProductService) { }
 
   addProduct() {
-    console.log("Add product attempt");
+    const product = {
+      name: this.name,
+      description: this.description,
+      price: this.price,
+      category: this.category,
+      imageUrl: this.imageUrl
+    };
+    this.productService.createProduct(product).subscribe(
+      response => {
+        this.message = 'Product added successfully';
+      },
+      error => {
+        this.message = 'Failed to add product';
+      }
+    );
   }
-
 }
-

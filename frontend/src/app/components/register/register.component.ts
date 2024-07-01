@@ -1,26 +1,6 @@
-// import { Component } from '@angular/core';
-// import { AuthService } from '../../services/auth.service';
-
-// @Component({
-//   selector: 'app-register',
-//   templateUrl: './register.component.html',
-//   styleUrls: ['./register.component.css']
-// })
-// export class RegisterComponent {
-//   username: string = '';
-//   email: string = '';
-//   password: string = '';
-
-//   constructor(private authService: AuthService) { }
-
-//   async register() {
-//     const user = { username: this.username, email: this.email, password: this.password };
-//     const result = await this.authService.register(user);
-//     console.log(result);
-//   }
-// }
-
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -28,11 +8,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  username: string = '';
+  email: string = '';
+  password: string = '';
+  message: string = '';
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   register() {
-    console.log("Registration attempt");
+    const user = { username: this.username, email: this.email, password: this.password };
+    this.authService.register(user).subscribe(
+      response => {
+        this.message = 'User registered successfully!';
+        this.router.navigate(['/login']); // Redirect to login page
+      },
+      error => {
+        this.message = error.error.message;
+      }
+    );
   }
-
 }

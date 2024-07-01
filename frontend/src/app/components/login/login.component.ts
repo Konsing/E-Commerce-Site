@@ -1,25 +1,6 @@
-// import { Component } from '@angular/core';
-// import { AuthService } from '../../services/auth.service';
-
-// @Component({
-//   selector: 'app-login',
-//   templateUrl: './login.component.html',
-//   styleUrls: ['./login.component.css']
-// })
-// export class LoginComponent {
-//   email: string = '';
-//   password: string = '';
-
-//   constructor(private authService: AuthService) { }
-
-//   async login() {
-//     const user = { email: this.email, password: this.password };
-//     const result = await this.authService.login(user);
-//     console.log(result);
-//   }
-// }
-
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,11 +8,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  email: string = '';
+  password: string = '';
+  message: string = '';
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   login() {
-    console.log("Login attempt");
+    const user = { email: this.email, password: this.password };
+    this.authService.login(user).subscribe(
+      response => {
+        this.message = 'Login successful!';
+        this.router.navigate(['/']); // Redirect to home page or another route
+      },
+      error => {
+        this.message = error.error.message;
+      }
+    );
   }
-
 }

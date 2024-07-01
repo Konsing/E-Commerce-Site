@@ -1,0 +1,12 @@
+<div>
+    <h2>Shopping Cart</h2>
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.description }}</p>
+      <p>{{ item.price | currency }}</p>
+      <button (click)="removeFromCart(item)">Remove</button>
+    </div>
+    <h3>Total: {{ total | currency }}</h3>
+    <button (click)="checkout()" *ngIf="cartItems.length > 0">Proceed to Checkout</button>
+  </div>
+  
